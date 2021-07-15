@@ -60,7 +60,7 @@ function createFeatures(earthquakeData) {
     }
 
 
-    // Sending our earthquakes layer to the createMap function
+    // Sending earthquakes layer to the createMap function
     createMap(earthquakes, legend);
 }
 
@@ -90,20 +90,20 @@ function createMap(earthquakes, legend) {
         accessToken: API_KEY
     });
 
-    // Define a baseMaps object to hold our base layers
+    // Define a baseMaps object to hold the baseMaps layer
     var baseMaps = {
         "Light Map": streetmap,
         "Dark Map": darkmap,
         "Satellite Map": satellitemap
     };
 
-    // Create overlay object to hold our overlay layer
+    // Create overlay object to hold overlay layer
     var overlayMaps = {
         Earthquakes: earthquakes,
     
     };
 
-    // Create our map, giving it the streetmap and earthquakes layers to display on load
+    // Create map, giving it the streetmap and earthquakes layers to display upon load
     var myMap = L.map("mapid", {
         center: [
             37.09, -95.71
