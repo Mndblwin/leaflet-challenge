@@ -3,9 +3,9 @@ function init() {
     var platesQueryUrl = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_plates.json"
     // Perform a GET request to the query URLs
     d3.json(eqQueryUrl, function (eqData) {
-        //console.log(eqData)
+        console.log(eqData)
         d3.json(platesQueryUrl, function(plateData){
-            //console.log(plateData);
+            console.log(plateData);
             createFeatures(eqData.features, plateData.features);
         });
     });
@@ -19,16 +19,18 @@ function createFeatures(earthquakeData, plateData) {
 
     };
 
-    function chooseColor(mag){
-        return mag > 90 ? '#FF0D0D' :
-        mag > 70  ? '#FF4E11' :
-        mag > 50  ? '#FF8E15' :
-        mag > 30  ? '#FAB733' :
-        mag > 10  ? '#ACB334' :
+function chooseColor(mag){
+    return mag > 90 ? '#7FFF00' :
+        mag > 70  ? '#dfedbe' :
+        mag > 50  ? '#eede9f' :
+        mag > 30  ? '#FF8C00' :
+        mag > 20  ? '#FA8072' :
         mag > -10 ? '#69B34C' :
                     '#006B3E';
+       //             '#69B34C';
     }
-    
+   
+
     var earthquakes = L.geoJSON(earthquakeData, {
         onEachFeature: onEachFeature,
         pointToLayer: function (feature, latlng) {
@@ -46,7 +48,7 @@ function createFeatures(earthquakeData, plateData) {
     var legend = L.control({ position: 'bottomright' })
     legend.onAdd = function (map) {
       var div = L.DomUtil.create('div', 'info legend')
-      var limits = [-10, 10, 30, 50, 70, 90]
+      var limits = [-10, 20, 30, 50, 70,90]
       var labels = []
   
       div.innerHTML = '<div class="label-title"><h3>Depth</h3></div>'
