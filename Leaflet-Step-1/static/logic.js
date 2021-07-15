@@ -1,7 +1,7 @@
 function init() {
-    var eqQueryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
+    var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
     // Perform a GET request to the query URLs
-    d3.json(eqQueryUrl, function (eqData) {
+    d3.json(queryUrl, function (eqData) {
         console.log(eqData)
             //console.log(plateData);
             createFeatures(eqData.features);
@@ -18,11 +18,11 @@ function createFeatures(earthquakeData) {
 
     function chooseColor(mag){
         return mag > 90 ? '#FF0D0D' :
-        mag > 70  ? '#FF4E11' :
-        mag > 50  ? '#FF8E15' :
-        mag > 30  ? '#FAB733' :
-        mag > 10  ? '#ACB334' :
-        mag > -10 ? '#69B34C' :
+        mag > 70-90  ? '#FF4E11' :
+        mag > 50-70  ? '#FF8E15' :
+        mag > 30-50  ? '#FAB733' :
+        mag > 10-30  ? '#ACB334' :
+        mag > -10-0 ? '#69B34C' :
                     '#006B3E';
     }
     
@@ -43,7 +43,7 @@ function createFeatures(earthquakeData) {
     var legend = L.control({ position: 'bottomright' })
     legend.onAdd = function (map) {
       var div = L.DomUtil.create('div', 'info legend')
-      var limits = [-10, 10, 30, 50, 70, 90]
+      var limits = [-10-0, 10-30, 30-50, 50-70, 70-90, 90]
       var labels = []
   
       div.innerHTML = '<div class="label-title"><h3>Depth</h3></div>'
@@ -59,8 +59,6 @@ function createFeatures(earthquakeData) {
       return div
     }
 
-    
-    
 
     // Sending our earthquakes layer to the createMap function
     createMap(earthquakes, legend);

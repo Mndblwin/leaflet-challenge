@@ -17,11 +17,11 @@ html {
   padding: 6px 8px;
   font: 12px Arial, Helvetica, sans-serif;
   font-weight: bold;
-  color: #555;
-  background: #fff;
-  background: rgba(255, 255, 255, 0.8);
+  color: rgb(194, 73, 73);
+  background: rgb(141, 130, 130);
+  background: rgba(24, 18, 18, 0.8);
   border-radius: 5px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.39);
 }
 
 .legend ul {
