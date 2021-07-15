@@ -1,5 +1,5 @@
 function init() {
-    var eqQueryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
+    var eqQueryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
     var platesQueryUrl = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_plates.json"
     // Perform a GET request to the query URLs
     d3.json(eqQueryUrl, function (eqData) {
