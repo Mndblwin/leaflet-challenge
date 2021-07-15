@@ -17,11 +17,11 @@ function createFeatures(earthquakeData) {
     };
 
     function chooseColor(mag){
-        return mag > 90 ? '#FF0D0D' :
+        return mag > 90 ? '#ea2c2c' :
         mag > 70-90  ? '#FF4E11' :
         mag > 50-70  ? '#FF8E15' :
-        mag > 30-50  ? '#FAB733' :
-        mag > 10-30  ? '#ACB334' :
+        mag > 30-50  ? '#ee9c00' :
+        mag > 10-30  ? '#d4ee00' :
         mag > -10-0 ? '#69B34C' :
                     '#006B3E';
     }
