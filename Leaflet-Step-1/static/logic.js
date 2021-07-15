@@ -1,36 +1,31 @@
 function init() {
-    var eqQueryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
-    var platesQueryUrl = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_plates.json"
+    var eqQueryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
     // Perform a GET request to the query URLs
     d3.json(eqQueryUrl, function (eqData) {
         console.log(eqData)
-        d3.json(platesQueryUrl, function(plateData){
-            console.log(plateData);
-            createFeatures(eqData.features, plateData.features);
+            //console.log(plateData);
+            createFeatures(eqData.features);
         });
-    });
 
 }
 
-function createFeatures(earthquakeData, plateData) {
+function createFeatures(earthquakeData) {
 
     function onEachFeature(feature, layer) {
         layer.bindPopup(`<h3>${feature.properties.place}</h3><hr><p>Magnitude: ${feature.properties.mag}<br>Depth: ${feature.geometry.coordinates[2]}<br>Date: ${new Date(feature.properties.time)}`);
 
     };
 
-function chooseColor(mag){
-    return mag > 90 ? '#7FFF00' :
-        mag > 70  ? '#dfedbe' :
-        mag > 50  ? '#eede9f' :
-        mag > 30  ? '#FF8C00' :
-        mag > 20  ? '#FA8072' :
+    function chooseColor(mag){
+        return mag > 90 ? '#FF0D0D' :
+        mag > 70  ? '#FF4E11' :
+        mag > 50  ? '#FF8E15' :
+        mag > 30  ? '#FAB733' :
+        mag > 10  ? '#ACB334' :
         mag > -10 ? '#69B34C' :
                     '#006B3E';
-       //             '#69B34C';
     }
-   
-
+    
     var earthquakes = L.geoJSON(earthquakeData, {
         onEachFeature: onEachFeature,
         pointToLayer: function (feature, latlng) {
@@ -48,7 +43,7 @@ function chooseColor(mag){
     var legend = L.control({ position: 'bottomright' })
     legend.onAdd = function (map) {
       var div = L.DomUtil.create('div', 'info legend')
-      var limits = [-10, 20, 30, 50, 70,90]
+      var limits = [-10, 10, 30, 50, 70, 90]
       var labels = []
   
       div.innerHTML = '<div class="label-title"><h3>Depth</h3></div>'
@@ -56,7 +51,7 @@ function chooseColor(mag){
       div.innerHTML += '<div class="labels"><div class="min">' + limits[0] + '</div> \
               <div class="max">' + limits[limits.length - 1] + '+</div></div>'
   
-      limits.forEach(function (limit, index) {
+      limits.forEach(function (limits, index) {
         labels.push('<li style="background-color: ' + chooseColor(limits[index]) + '"></li>')
       })
   
@@ -64,18 +59,14 @@ function chooseColor(mag){
       return div
     }
 
-    var plates = L.geoJSON(plateData, {
-        color: "#f0e130",
-        fillColor: "none",
-        weight: 3,
-        opacity: 0.65
-    })
+    
+    
 
     // Sending our earthquakes layer to the createMap function
-    createMap(earthquakes, plates, legend);
+    createMap(earthquakes, legend);
 }
 
-function createMap(earthquakes, plates, legend) {
+function createMap(earthquakes, legend) {
 
     // Define streetmap, darkmap and satellite layers
     var streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -111,7 +102,7 @@ function createMap(earthquakes, plates, legend) {
     // Create overlay object to hold our overlay layer
     var overlayMaps = {
         Earthquakes: earthquakes,
-        TectonicPlates: plates
+    
     };
 
     // Create our map, giving it the streetmap and earthquakes layers to display on load
